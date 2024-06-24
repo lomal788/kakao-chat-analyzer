@@ -109,38 +109,48 @@ def parse(file_type, file_path,
                 if line.find("님이 들어왔습니다.") > -1:
                     user_name = line.replace('님이 들어왔습니다.', '')
                     msgs.append({'datetime': my_datetime,
-                                        'user_name': user_name,
+                                        'user_name': user_name.replace('\n',''),
                                         'type': 'enter'
                         })
                     continue
                 elif line.find("님이 나갔습니다.") > -1:
                     user_name = line.replace('님이 나갔습니다.', '')
                     msgs.append({'datetime': my_datetime,
-                                        'user_name': user_name,
+                                        'user_name': user_name.replace('\n',''),
                                         'type': 'leave'
                     })
                     continue
                 elif line.find("님을 내보냈습니다.") > -1 and not re.match(date_pattern, line) and not re.match(time_pattern, line):
                     user_name = line.replace('님을 내보냈습니다.', '')
                     msgs.append({'datetime': my_datetime,
-                                        'user_name': user_name,
+                                        'user_name': user_name.replace('\n',''),
                                         'type': 'kicked'
                     })
                     continue
                 elif line.find('채팅방 관리자가 메시지를 가렸습니다') > -1:
-                    msgs.append({'datetime': my_datetime,
-                                 'type': 'delText'
-                    })
+                    # msgs.append({'datetime': my_datetime,
+                    #              'type': 'delText'
+                    # })
                     continue
                 elif line.find('님이 부방장이 되었습니다') > -1:
-                    msgs.append({'datetime': my_datetime,
-                                 'type': 'becomeManager'
-                    })
+                    # msgs.append({'datetime': my_datetime,
+                    #              'type': 'becomeManager'
+                    # })
                     continue
                 elif line.find('님이 부방장에서 해제되었습니다') > -1:
-                    msgs.append({'datetime': my_datetime,
-                                 'type': 'delManager'
-                    })
+                    # msgs.append({'datetime': my_datetime,
+                    #              'type': 'delManager'
+                    # })
+                    continue
+                elif line.find('샵검색') > -1:
+                    # msgs.append({'datetime': my_datetime,
+                    #              'type': 'delManager'
+                    # })
+                    continue
+                elif line.find('선물 게임이 종료되었습니다') > -1 or line.find('선물게임이 종료되었습니다')  > -1:
+                    # msgs.append({'datetime': my_datetime,
+                    #              'type': 'delManager'
+                    # })
                     continue
                 
                 if re.match(date_pattern, line) or re.match(time_pattern, line):
@@ -151,6 +161,12 @@ def parse(file_type, file_path,
                         time = buffer_tokens[1].replace('[', '').strip()
                         my_datetime = _str_to_datetime(file_type, f"{date} {time}")
                         text = buffer_tokens[2].strip()
+
+                        if text == "운세":
+                            msgs.append({'datetime': my_datetime,
+                                         'user_name': user_name,
+                                        'type': 'lucky'
+                            })
                         
                         msgs.append({'datetime': my_datetime,
                                         'user_name': user_name,
