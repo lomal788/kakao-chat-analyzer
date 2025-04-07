@@ -18,4 +18,4 @@
 
 - pyinstaller .\index.spec
 
-![console.jpg](https://raw.githubusercontent.com/lomal788/kakao-chat-analyzer/main/img/console.jpg)
+![console.png](https://raw.githubusercontent.com/lomal788/kakao-chat-analyzer/main/img/console.png)
