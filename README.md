@@ -1,4 +1,4 @@
-## kakao Exported chat analyzer
+## kakao chat analyzer
 
 ### 카카오톡 대화내용 분석기
 
